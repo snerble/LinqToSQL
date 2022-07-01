@@ -21,7 +21,8 @@ using var dbContext = new AppDbContext(@"Data Source=C:\Users\Conor\Desktop\Nepg
 
 var query = dbContext.Commands
     .Select(c => new { c.Id, c.Name })
-    .OrderBy(x => x.Name)
+    //.OrderBy(x => x.Name)
+    .GroupBy(x => x.Name)
     .QueryAsync();
 
 await foreach (var item in query)
