@@ -7,7 +7,7 @@ Assignment for Software Engineering minor
 - [x] `WHERE`
 - [ ] `INCLUDE`
 - [x] `ORDERBY`
-- [ ] `GROUPBY`
+- [x] `GROUPBY`
 
 ## Optional stuff to make it useful
 
