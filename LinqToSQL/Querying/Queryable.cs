@@ -1,5 +1,6 @@
 ﻿using LinqToSQL.Querying.Nodes;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -37,6 +38,8 @@ internal class Queryable<TEntity> : IQueryable<TEntity>
         using var command = query.Build();
         command.Connection = _connection;
         command.Transaction = transaction;
+
+        Debug.WriteLine(command.CommandText);
 
         var reader = await command.ExecuteReaderAsync(cancellationToken);
 
@@ -186,7 +189,7 @@ internal class Queryable<TEntity> : IQueryable<TEntity>
 
     public IQueryable<TEntity> GroupBy<TGroup>(Expression<Func<TEntity, TGroup>> expression)
     {
-        throw new NotImplementedException();
+        return new Queryable<TEntity>(_connection, _syntaxTree.Append(new GroupByNode(_syntaxTree, expression)));
     }
 
     public IQueryable<TEntity> OrderBy<TOrder>(Expression<Func<TEntity, TOrder>> expression, OrderDirection direction = OrderDirection.Ascending)
