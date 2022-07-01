@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace LinqToSQL.Utilities;
@@ -26,7 +27,8 @@ internal static class EntityUtilities
     {
         return type
             .GetMembers(BindingFlags.Instance | BindingFlags.Public)
-            .FirstOrDefault();
+            .Where(x => Attribute.IsDefined(x, typeof(KeyAttribute)))
+            .SingleOrDefault();
     }
 
     /// <summary>
